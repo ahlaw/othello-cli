@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "othello"
+version = "0.1.0"
+description = ""
+authors = ["Amos Law <amos.law98@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.4.1"
+pytest-cov = "^2.8.1"
+coverage = {extras = ["toml"], version = "^5.1"}
+
+[tool.coverage.paths]
+source = ["*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["othello"]
+
+[tool.coverage.report]
+show_missing = true
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
