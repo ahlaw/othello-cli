@@ -28,26 +28,32 @@ def test_raises_exception_on_odd_board_size():
 
 
 def test_correct_starting_position(board):
-    assert (board._grid[3][3] == board.stone(Player.WHITE) and
-            board._grid[3][4] == board.stone(Player.BLACK) and
-            board._grid[4][3] == board.stone(Player.BLACK) and
-            board._grid[4][4] == board.stone(Player.WHITE))
-    
+    assert (
+        board._grid[3][3] == board.stone(Player.WHITE)
+        and board._grid[3][4] == board.stone(Player.BLACK)
+        and board._grid[4][3] == board.stone(Player.BLACK)
+        and board._grid[4][4] == board.stone(Player.WHITE)
+    )
+
 
 def test_get_initial_valid_moves_black(board):
     valid_moves = board.get_valid_moves(Player.BLACK)
-    assert valid_moves == {Point(3, 2): [Point(3, 3)],
-                           Point(2, 3): [Point(3, 3)],
-                           Point(5, 4): [Point(4, 4)],
-                           Point(4, 5): [Point(4, 4)]}
-    
+    assert valid_moves == {
+        Point(3, 2): [Point(3, 3)],
+        Point(2, 3): [Point(3, 3)],
+        Point(5, 4): [Point(4, 4)],
+        Point(4, 5): [Point(4, 4)],
+    }
+
 
 def test_get_initial_valid_moves_white(board):
     valid_moves = board.get_valid_moves(Player.WHITE)
-    assert valid_moves == {Point(4, 2): [Point(4, 3)],
-                           Point(5, 3): [Point(4, 3)],
-                           Point(2, 4): [Point(3, 4)],
-                           Point(3, 5): [Point(3, 4)]}
+    assert valid_moves == {
+        Point(4, 2): [Point(4, 3)],
+        Point(5, 3): [Point(4, 3)],
+        Point(2, 4): [Point(3, 4)],
+        Point(3, 5): [Point(3, 4)],
+    }
 
 
 def test_get_valid_moves_custom():
@@ -55,18 +61,22 @@ def test_get_valid_moves_custom():
     board._grid[0][1] = board.stone(Player.WHITE)
     valid_moves = board.get_valid_moves(Player.BLACK)
     print(valid_moves)
-    assert valid_moves == {Point(0, 1): [Point(1, 1)],
-                           Point(3, 2): [Point(2, 2)],
-                           Point(2, 3): [Point(2, 2)]}
+    assert valid_moves == {
+        Point(0, 1): [Point(1, 1)],
+        Point(3, 2): [Point(2, 2)],
+        Point(2, 3): [Point(2, 2)],
+    }
 
 
 def test_place_stone_valid(board):
     board.place_stone(Player.BLACK, Point(3, 2))
-    assert (board._grid[3][3] == board.stone(Player.BLACK) and
-            board._grid[3][4] == board.stone(Player.BLACK) and
-            board._grid[4][3] == board.stone(Player.BLACK) and
-            board._grid[4][4] == board.stone(Player.WHITE) and
-            board._grid[2][3] == board.stone(Player.BLACK))
+    assert (
+        board._grid[3][3] == board.stone(Player.BLACK)
+        and board._grid[3][4] == board.stone(Player.BLACK)
+        and board._grid[4][3] == board.stone(Player.BLACK)
+        and board._grid[4][4] == board.stone(Player.WHITE)
+        and board._grid[2][3] == board.stone(Player.BLACK)
+    )
 
 
 def test_raises_exception_on_invalid_move(board):

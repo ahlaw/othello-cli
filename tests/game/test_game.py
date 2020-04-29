@@ -14,24 +14,25 @@ def new_game():
 
 def test_apply_move_play(new_game):
     game = new_game.apply_move(Move.play(Point(3, 2)))
-    assert (game.current_player == Player.WHITE and
-            game.board != new_game.board and
-            game.last_move.is_play)
+    assert (
+        game.current_player == Player.WHITE
+        and game.board != new_game.board
+        and game.last_move.is_play
+    )
 
 
 def test_apply_move_resign(new_game):
     game = new_game.apply_move(Move.resign())
-    assert (game.current_player == Player.WHITE and
-            game.board == new_game.board and
-            game.last_move.is_resign)
-    
+    assert (
+        game.current_player == Player.WHITE
+        and game.board == new_game.board
+        and game.last_move.is_resign
+    )
+
 
 def test_legal_moves(new_game):
     legal_moves = new_game.legal_moves()
-    assert legal_moves == [Point(3, 2),
-                           Point(2, 3),
-                           Point(5, 4),
-                           Point(4, 5)]
+    assert legal_moves == [Point(3, 2), Point(2, 3), Point(5, 4), Point(4, 5)]
 
 
 def test_raises_exception_on_illegal_stone_placement(new_game):
@@ -60,18 +61,20 @@ def test_game_over_after_resign(new_game):
 
 def test_game_over_after_two_passes():
     game = GameState.new_game(board_size=4)
-    moves = [Point(1, 0),
-             Point(0, 0),
-             Point(0, 1),
-             Point(0, 2),
-             Point(1, 3),
-             Point(2, 0),
-             Point(3, 0),
-             Point(3, 2),
-             Point(3, 1),
-             Point(0, 3),
-             Point(3, 3),
-             Point(2, 3)]
+    moves = [
+        Point(1, 0),
+        Point(0, 0),
+        Point(0, 1),
+        Point(0, 2),
+        Point(1, 3),
+        Point(2, 0),
+        Point(3, 0),
+        Point(3, 2),
+        Point(3, 1),
+        Point(0, 3),
+        Point(3, 3),
+        Point(2, 3),
+    ]
     for point in moves:
         game = game.apply_move(Move.play(point))
     game = game.apply_move(Move.pass_turn())

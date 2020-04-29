@@ -55,10 +55,7 @@ def safety(session):
         )
         install_with_constraints(session, "safety")
         session.run(
-            "safety",
-            "check",
-            f"--file={requirements.name}",
-            "--full-report",
+            "safety", "check", f"--file={requirements.name}", "--full-report",
         )
 
 
@@ -66,7 +63,5 @@ def safety(session):
 def tests(session):
     args = session.posargs or ["--cov"]
     session.run("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(
-        session, "coverage[toml]", "pytest", "pytest-cov"
-    )
+    install_with_constraints(session, "coverage[toml]", "pytest", "pytest-cov")
     session.run("pytest", *args)

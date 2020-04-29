@@ -1,6 +1,6 @@
 import pytest
 
-from othello.game.move import Move, InvalidMoveError
+from othello.game.move import InvalidMoveError, Move
 from othello.game.point import Point
 
 

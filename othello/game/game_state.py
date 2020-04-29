@@ -9,6 +9,7 @@ class InvalidMoveError(Exception):
     Exception class for passing on a turn when there are
     legal stone placements.
     """
+
     pass
 
 
@@ -17,6 +18,7 @@ class GameState:
     Game class representing the current game state of
     an Othello game.
     """
+
     def __init__(self, board, current_player, move=None, prev_move=False):
         self.board = board
         self.current_player = current_player
@@ -33,10 +35,10 @@ class GameState:
             try:
                 next_board.place_stone(self.current_player, move.point)
             except InvalidStonePlacementError:
-                raise InvalidMoveError(f'Cannot place the stone at {move.point}')
+                raise InvalidMoveError(f"Cannot place the stone at {move.point}")
         else:
             if move.is_pass and self.legal_moves():
-                raise InvalidMoveError('Cannot pass when there are legal moves!')
+                raise InvalidMoveError("Cannot pass when there are legal moves!")
             next_board = self.board
         return GameState(next_board, self.current_player.other, move, self.last_move)
 
