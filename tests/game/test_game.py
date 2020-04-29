@@ -1,15 +1,15 @@
 import pytest
 
-from othello.game import Game, InvalidMoveError
-from othello.move import Move
-from othello.player import Player
-from othello.point import Point
+from othello.game.game_state import GameState, InvalidMoveError
+from othello.game.move import Move
+from othello.game.player import Player
+from othello.game.point import Point
 
 
 @pytest.fixture
 def new_game():
     """Returns a new Game instance."""
-    return Game.new_game()
+    return GameState.new_game()
 
 
 def test_apply_move_play(new_game):
@@ -59,7 +59,7 @@ def test_game_over_after_resign(new_game):
 
 
 def test_game_over_after_two_passes():
-    game = Game.new_game(board_size=4)
+    game = GameState.new_game(board_size=4)
     moves = [Point(1, 0),
              Point(0, 0),
              Point(0, 1),

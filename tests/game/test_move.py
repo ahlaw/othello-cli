@@ -1,7 +1,7 @@
 import pytest
 
-from othello.move import Move, InvalidMoveError
-from othello.point import Point
+from othello.game.move import Move, InvalidMoveError
+from othello.game.point import Point
 
 
 def test_play():

@@ -12,7 +12,7 @@ class InvalidMoveError(Exception):
     pass
 
 
-class Game:
+class GameState:
     """
     Game class representing the current game state of
     an Othello game.
@@ -38,7 +38,7 @@ class Game:
             if move.is_pass and self.legal_moves():
                 raise InvalidMoveError('Cannot pass when there are legal moves!')
             next_board = self.board
-        return Game(next_board, self.current_player.other, move, self.last_move)
+        return GameState(next_board, self.current_player.other, move, self.last_move)
 
     def legal_moves(self):
         """

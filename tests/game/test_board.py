@@ -1,8 +1,9 @@
 import pytest
 
-from othello.board import Board, BoardSizeError, InvalidStonePlacementError
-from othello.player import Player
-from othello.point import Point
+from othello.game.board import Board
+from othello.game.board import BoardSizeError, InvalidStonePlacementError
+from othello.game.player import Player
+from othello.game.point import Point
 
 
 @pytest.fixture

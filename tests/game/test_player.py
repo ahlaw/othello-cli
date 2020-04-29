@@ -1,4 +1,4 @@
-from othello.player import Player
+from othello.game.player import Player
 
 
 def test_other_player_from_white_returns_black():

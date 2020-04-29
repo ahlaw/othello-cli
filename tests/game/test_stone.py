@@ -1,8 +1,8 @@
 import pytest
 
-from othello.player import Player
-from othello.stone import BLANK_STONE, BLACK_STONE, WHITE_STONE
-from othello.stone import StoneFactory, StoneError
+from othello.game.player import Player
+from othello.game.stone import BLANK_STONE, BLACK_STONE, WHITE_STONE
+from othello.game.stone import StoneFactory, StoneError
 
 
 @pytest.fixture
