@@ -1,17 +1,27 @@
-from player import Player
-from point import Point
-from stone import StoneFactory
+from .player import Player
+from .point import Point
+from .stone import StoneFactory
 
 MIN_BOARD_SIZE = 4
-MAX_BOARD_SIZE = 28
+MAX_BOARD_SIZE = 26
 
 class BoardSizeError(Exception):
+    """
+    Exception class for invalid board sizes when initializing Board object.
+    """
     pass
 
-class InvalidMoveError(Exception):
+class InvalidStonePlacementError(Exception):
+    """
+    Exception class for placing stone on Board at an invalid location.
+    """
     pass
 
 class Board():
+    """
+    Board class representing an Othello board with white
+    and black stones.
+    """
     def __init__(self, size):
         if (not MIN_BOARD_SIZE <= size or
             not MAX_BOARD_SIZE >= size or
@@ -35,11 +45,28 @@ class Board():
     def __str__(self):
         return '\n'.join(f'{row}' for row in self._grid)
 
+    def count_stones(self, player):
+        """
+        Counts the number of stones on the board corresponding
+        to the given player
+        """
+        count = 0
+        player_stone = self.stone(player)
+        for i in range(self.size):
+            for j in range(self.size):
+                if self._grid[i][j] == player_stone:
+                    count += 1
+        return count
+
     def place_stone(self, player, point):
+        """
+        Place stone corresponding to player color at the
+        given point if it is a valid move.
+        """
         valid_moves = self.get_valid_moves(player)
 
         if point not in valid_moves:
-            raise InvalidMoveError(f'{point} is not a valid move!')
+            raise InvalidStonePlacementError(f'{point} is not a valid move!')
 
         self._grid[point.col][point.row] = self.stone(player)
         capturables = valid_moves[point]
@@ -47,6 +74,11 @@ class Board():
             self._grid[col][row] = self.stone(player)
 
     def get_valid_moves(self, player):
+        """
+        Returns a dictionary of where the keys are valid stone
+        placements for the given player and the values are the
+        stones that will be captured upon playing the move.
+        """
         valid_moves = {}
         for col in range(self.size):
             for row in range(self.size):

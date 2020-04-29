@@ -1,8 +1,16 @@
 class InvalidMoveError(Exception):
+    """
+    Exception class for invalid Move object initialization.
+    """
     pass
 
 
 class Move():
+    """
+    Move class representing a chosen move. Should be
+    instantiated with one of the defined alternative
+    constructors.
+    """
     def __init__(self, point=None, is_pass=False, is_resign=False):
         if not ((point is not None) ^ is_pass ^ is_resign):
             raise InvalidMoveError("Invalid instantiation of Move object!")

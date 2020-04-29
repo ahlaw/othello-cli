@@ -15,6 +15,11 @@ class Stone(str):
 
 
 class StoneFactory:
+    """
+    StoneFactory class instantiates a StoneFactory object
+    that can create Stone objects corresponding to either
+    a player or an empty tile.
+    """
     def __call__(self, player=None):
         if not player:
             return Stone(BLANK_STONE)

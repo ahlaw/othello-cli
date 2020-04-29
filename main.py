@@ -1,6 +1,6 @@
-from game import Game
-from move import Move
-from point import Point
+from othello.game import Game
+from othello.move import Move
+from othello.point import Point
 
 
 def point_from_coords(coords):
@@ -23,7 +23,7 @@ if __name__ == '__main__':
             move = Move(is_pass=True)
         else:
             print(valid_moves)
-            human_move = input('Enter your move --')
+            human_move = input('Enter your move: ')
             point = point_from_coords(human_move.strip())
             move = Move(point)
-        game = game.apply_move(Move(point))
+        game = game.apply_move(Move.play(point))

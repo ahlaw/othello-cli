@@ -1,6 +1,8 @@
 import enum
 
 class Player(enum.Enum):
+    """Player class representing a playable color. """
+
     BLACK = 1
     WHITE = 2
 
