@@ -32,7 +32,7 @@ def test_apply_move_resign(new_game: GameState) -> None:
 
 def test_legal_moves(new_game: GameState) -> None:
     legal_moves = new_game.legal_moves()
-    assert legal_moves == [Point(3, 2), Point(2, 3), Point(5, 4), Point(4, 5)]
+    assert sorted(legal_moves) == [Point(2, 3), Point(3, 2), Point(4, 5), Point(5, 4)]
 
 
 def test_raises_exception_on_illegal_stone_placement(new_game: GameState) -> None:

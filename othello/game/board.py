@@ -71,10 +71,10 @@ class Board:
         if point not in valid_moves:
             raise InvalidStonePlacementError(f"{point} is not a valid move!")
 
-        self._grid[point.col][point.row] = self.stone(player)
+        self._grid[point.row][point.col] = self.stone(player)
         capturables = valid_moves[point]
         for row, col in capturables:
-            self._grid[col][row] = self.stone(player)
+            self._grid[row][col] = self.stone(player)
 
     def get_valid_moves(self, player: Player) -> Dict[Point, List[Point]]:
         """
@@ -83,8 +83,8 @@ class Board:
         stones that will be captured upon playing the move.
         """
         valid_moves = {}
-        for col in range(self.size):
-            for row in range(self.size):
+        for row in range(self.size):
+            for col in range(self.size):
                 point = Point(row, col)
                 capturables = self._get_capturables(player, point)
                 if capturables:
@@ -103,7 +103,7 @@ class Board:
             (1, -1),
         ]
         capturables = []
-        if self._is_on_grid(point) and self._grid[point.col][point.row] == self.stone():
+        if self._is_on_grid(point) and self._grid[point.row][point.col] == self.stone():
             for direction in directions:
                 tmp = self._get_capturables_in_dir(player, point, direction)
                 if tmp:
@@ -119,7 +119,7 @@ class Board:
         while True:
             next_point = Point(next_point.row + row_dir, next_point.col + col_dir)
             if self._is_on_grid(next_point):
-                next_value = self._grid[next_point.col][next_point.row]
+                next_value = self._grid[next_point.row][next_point.col]
                 if next_value != self.stone():
                     if next_value == self.stone(player):
                         return capturables

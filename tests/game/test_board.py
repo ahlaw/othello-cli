@@ -62,20 +62,20 @@ def test_get_valid_moves_custom() -> None:
     valid_moves = board.get_valid_moves(Player.BLACK)
     print(valid_moves)
     assert valid_moves == {
-        Point(0, 1): [Point(1, 1)],
-        Point(3, 2): [Point(2, 2)],
+        Point(1, 0): [Point(1, 1)],
         Point(2, 3): [Point(2, 2)],
+        Point(3, 2): [Point(2, 2)],
     }
 
 
 def test_place_stone_valid(board: Board) -> None:
-    board.place_stone(Player.BLACK, Point(3, 2))
+    board.place_stone(Player.BLACK, Point(2, 3))
     assert (
-        board._grid[3][3] == board.stone(Player.BLACK)
-        and board._grid[3][4] == board.stone(Player.BLACK)
+        board._grid[3][4] == board.stone(Player.BLACK)
+        and board._grid[2][3] == board.stone(Player.BLACK)
+        and board._grid[3][3] == board.stone(Player.BLACK)
         and board._grid[4][3] == board.stone(Player.BLACK)
         and board._grid[4][4] == board.stone(Player.WHITE)
-        and board._grid[2][3] == board.stone(Player.BLACK)
     )
 
 
