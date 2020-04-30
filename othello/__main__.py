@@ -1,18 +1,17 @@
-from game.game_state import GameState
-from game.move import Move
-from game.point import Point
+from .game.game_state import GameState
+from .game.move import Move
+from .game.point import Point
 
 
-def point_from_coords(coords):
+def point_from_coords(coords: str) -> Point:
     try:
-        coords = [int(x) for x in coords.split(",")]
-        row, col = coords
+        row, col = [int(x) for x in coords.split(",")]
         return Point(row, col)
     except BaseException:
         raise Exception("Invalid coordinate")
 
 
-def main():
+def main() -> None:
     game = GameState.new_game()
     while not game.is_over():
         print(game.board)

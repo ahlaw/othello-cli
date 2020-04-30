@@ -1,5 +1,8 @@
-from collections import namedtuple
+from typing import NamedTuple
 
 
-class Point(namedtuple("Point", "row col")):
+class Point(NamedTuple):
     """Point class for point on board."""
+
+    row: int
+    col: int

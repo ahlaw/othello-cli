@@ -1,3 +1,5 @@
+from typing import Dict, List, Tuple
+
 from .player import Player
 from .point import Point
 from .stone import StoneFactory
@@ -28,7 +30,7 @@ class Board:
     and black stones.
     """
 
-    def __init__(self, size):
+    def __init__(self, size: int) -> None:
         if not MIN_BOARD_SIZE <= size or not MAX_BOARD_SIZE >= size or size % 2 != 0:
             raise BoardSizeError(f"{size} is invalid size!")
 
@@ -43,12 +45,10 @@ class Board:
         self._grid[center + 1][center] = self.stone(Player.BLACK)
         self._grid[center + 1][center + 1] = self.stone(Player.WHITE)
 
-        self.valid_moves = {}
-
-    def __str__(self):
+    def __str__(self) -> str:
         return "\n".join(f"{row}" for row in self._grid)
 
-    def count_stones(self, player):
+    def count_stones(self, player: Player) -> int:
         """
         Counts the number of stones on the board corresponding
         to the given player
@@ -61,7 +61,7 @@ class Board:
                     count += 1
         return count
 
-    def place_stone(self, player, point):
+    def place_stone(self, player: Player, point: Point) -> None:
         """
         Place stone corresponding to player color at the
         given point if it is a valid move.
@@ -76,7 +76,7 @@ class Board:
         for row, col in capturables:
             self._grid[col][row] = self.stone(player)
 
-    def get_valid_moves(self, player):
+    def get_valid_moves(self, player: Player) -> Dict[Point, List[Point]]:
         """
         Returns a dictionary of where the keys are valid stone
         placements for the given player and the values are the
@@ -91,7 +91,7 @@ class Board:
                     valid_moves[point] = capturables
         return valid_moves
 
-    def _get_capturables(self, player, point):
+    def _get_capturables(self, player: Player, point: Point) -> List[Point]:
         directions = [
             (-1, 1),
             (0, 1),
@@ -110,8 +110,10 @@ class Board:
                     capturables.extend(tmp)
         return capturables
 
-    def _get_capturables_in_dir(self, player, point, direction):
-        capturables = []
+    def _get_capturables_in_dir(
+        self, player: Player, point: Point, direction: Tuple[int, int]
+    ) -> List[Point]:
+        capturables: List[Point] = []
         next_point = point
         row_dir, col_dir = direction
         while True:
@@ -128,5 +130,5 @@ class Board:
                 break
         return []
 
-    def _is_on_grid(self, point):
+    def _is_on_grid(self, point: Point) -> bool:
         return 0 <= point.row < self.size and 0 <= point.col < self.size

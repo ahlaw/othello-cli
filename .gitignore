@@ -10,3 +10,8 @@ __pycache__/
 .nox/
 .coverage
 .coverage.*
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json

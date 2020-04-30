@@ -1,7 +1,10 @@
 import copy
+from typing import List, Optional
 
 from .board import Board, InvalidStonePlacementError
+from .move import Move
 from .player import Player
+from .point import Point
 
 
 class InvalidMoveError(Exception):
@@ -19,18 +22,24 @@ class GameState:
     an Othello game.
     """
 
-    def __init__(self, board, current_player, move=None, prev_move=False):
+    def __init__(
+        self,
+        board: Board,
+        current_player: Player,
+        move: Optional[Move] = None,
+        prev_move: Optional[Move] = None,
+    ) -> None:
         self.board = board
         self.current_player = current_player
         self.last_move = move
         self.second_last_move = prev_move
 
-    def apply_move(self, move):
+    def apply_move(self, move: Move) -> "GameState":
         """
         Takes the game state and the move to be applied.
         Returns new game state.
         """
-        if move.is_play:
+        if move.is_play and move.point is not None:
             next_board = copy.deepcopy(self.board)
             try:
                 next_board.place_stone(self.current_player, move.point)
@@ -42,13 +51,13 @@ class GameState:
             next_board = self.board
         return GameState(next_board, self.current_player.other, move, self.last_move)
 
-    def legal_moves(self):
+    def legal_moves(self) -> List[Point]:
         """
         Returns list of moves that are legal plays for the current player.
         """
         return list(self.board.get_valid_moves(self.current_player).keys())
 
-    def is_over(self):
+    def is_over(self) -> bool:
         """
         Returns whether game is over given the current state.
         """
@@ -60,7 +69,7 @@ class GameState:
             return False
         return self.last_move.is_pass and self.second_last_move.is_pass
 
-    def winner(self):
+    def winner(self) -> Optional[Player]:
         """
         Returns player who has not resigned if one has resigned.
         If neither player has resigned, returns player with the most
@@ -78,7 +87,7 @@ class GameState:
             return None
 
     @classmethod
-    def new_game(cls, board_size=8):
+    def new_game(cls, board_size=8) -> "GameState":
         """
         Returns initial state of game.
         """

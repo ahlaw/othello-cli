@@ -1,9 +1,11 @@
+from typing import Optional
+
 from .player import Player
 
 
-BLANK_STONE = "0"
-BLACK_STONE = "1"
-WHITE_STONE = "2"
+BLANK_STONE: str = "0"
+BLACK_STONE: str = "1"
+WHITE_STONE: str = "2"
 
 
 class StoneError(Exception):
@@ -21,7 +23,7 @@ class StoneFactory:
     a player or an empty tile.
     """
 
-    def __call__(self, player=None):
+    def __call__(self, player: Optional[Player] = None) -> Stone:
         if not player:
             return Stone(BLANK_STONE)
         elif player == Player.BLACK:

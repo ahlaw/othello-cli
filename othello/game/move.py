@@ -1,3 +1,8 @@
+from typing import Optional
+
+from .point import Point
+
+
 class InvalidMoveError(Exception):
     """
     Exception class for invalid Move object initialization.
@@ -13,7 +18,12 @@ class Move:
     constructors.
     """
 
-    def __init__(self, point=None, is_pass=False, is_resign=False):
+    def __init__(
+        self,
+        point: Optional[Point] = None,
+        is_pass: bool = False,
+        is_resign: bool = False,
+    ) -> None:
         if not ((point is not None) ^ is_pass ^ is_resign):
             raise InvalidMoveError("Invalid instantiation of Move object!")
         self.point = point
@@ -22,13 +32,13 @@ class Move:
         self.is_resign = is_resign
 
     @classmethod
-    def play(cls, point):
+    def play(cls, point: Point) -> "Move":
         return Move(point=point)
 
     @classmethod
-    def pass_turn(cls):
+    def pass_turn(cls) -> "Move":
         return Move(is_pass=True)
 
     @classmethod
-    def resign(cls):
+    def resign(cls) -> "Move":
         return Move(is_resign=True)
