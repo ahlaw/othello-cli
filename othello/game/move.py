@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional
 
 from .point import Point
@@ -32,13 +34,13 @@ class Move:
         self.is_resign = is_resign
 
     @classmethod
-    def play(cls, point: Point) -> "Move":
+    def play(cls, point: Point) -> Move:
         return Move(point=point)
 
     @classmethod
-    def pass_turn(cls) -> "Move":
+    def pass_turn(cls) -> Move:
         return Move(is_pass=True)
 
     @classmethod
-    def resign(cls) -> "Move":
+    def resign(cls) -> Move:
         return Move(is_resign=True)

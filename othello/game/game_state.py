@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 from typing import List, Optional
 
@@ -34,7 +36,7 @@ class GameState:
         self.last_move = move
         self.second_last_move = prev_move
 
-    def apply_move(self, move: Move) -> "GameState":
+    def apply_move(self, move: Move) -> GameState:
         """
         Takes the game state and the move to be applied.
         Returns new game state.
@@ -87,7 +89,7 @@ class GameState:
             return None
 
     @classmethod
-    def new_game(cls, board_size=8) -> "GameState":
+    def new_game(cls, board_size: int = 8) -> GameState:
         """
         Returns initial state of game.
         """

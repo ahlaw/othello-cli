@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import enum
 
 
@@ -8,5 +10,5 @@ class Player(enum.Enum):
     WHITE: int = 2
 
     @property
-    def other(self) -> "Player":
+    def other(self) -> Player:
         return Player.BLACK if self == Player.WHITE else Player.WHITE
