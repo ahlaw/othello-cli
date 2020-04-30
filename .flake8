@@ -5,6 +5,4 @@ max-line-length = 80
 max-complexity = 10
 application-import-names = othello,tests
 import-order-style = google
-per-file-ignores =
-    tests/*:S101,ANN
-    noxfile.py:ANN
+per-file-ignores = tests/*:S101,ANN
