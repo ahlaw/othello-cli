@@ -17,6 +17,7 @@ def test_apply_move_play(new_game: GameState) -> None:
     assert (
         game.current_player == Player.WHITE
         and game.board != new_game.board
+        and game.last_move
         and game.last_move.is_play
     )
 
@@ -26,6 +27,7 @@ def test_apply_move_resign(new_game: GameState) -> None:
     assert (
         game.current_player == Player.WHITE
         and game.board == new_game.board
+        and game.last_move
         and game.last_move.is_resign
     )
 

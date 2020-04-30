@@ -24,11 +24,9 @@ class StoneFactory:
     """
 
     def __call__(self, player: Optional[Player] = None) -> Stone:
-        if not player:
-            return Stone(BLANK_STONE)
-        elif player == Player.BLACK:
+        if player == Player.BLACK:
             return Stone(BLACK_STONE)
         elif player == Player.WHITE:
             return Stone(WHITE_STONE)
         else:
-            raise StoneError("Invalid player/color for stone!")
+            return Stone(BLANK_STONE)
