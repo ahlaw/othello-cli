@@ -1,5 +1,6 @@
-from .game.game_state import GameState
-from .game.move import Move
+from .agent.human import Human
+from .game.game_state import GameState, InvalidMoveError
+from .game.player import Player
 from .game.point import Point
 
 
@@ -12,19 +13,34 @@ def point_from_coords(coords: str) -> Point:
 
 
 def main() -> None:
-    game = GameState.new_game()
-    while not game.is_over():
-        print(game.board)
-        print(game.current_player)
-        valid_moves = game.legal_moves()
-        if not valid_moves:
-            move = Move(is_pass=True)
+    game_state = GameState.new_game(4)
+    agents = {}
+    agents[Player.BLACK] = Human()
+    agents[Player.WHITE] = Human()
+    while not game_state.is_over():
+        print(game_state.board)
+        print(f"Player turn: {game_state.current_player}")
+        valid_moves = game_state.legal_moves()
+        if valid_moves:
+            human_valid_moves = [
+                Human.point_to_notation(point) for point in valid_moves
+            ]
+            print(f"Valid moves: {human_valid_moves}")
+            print(f"Valid moves: {valid_moves}")
         else:
-            print(valid_moves)
-            human_move = input("Enter your move: ")
-            point = point_from_coords(human_move.strip())
-            move = Move.play(point)
-        game = game.apply_move(move)
+            print("No valid moves this turn!")
+        while True:
+            try:
+                move = agents[game_state.current_player].select_move(game_state)
+                game_state = game_state.apply_move(move)
+                break
+            except InvalidMoveError:
+                print("Invalid move! Try another move.")
+    winner = game_state.winner()
+    if winner:
+        print(f"The winner is {winner}")
+    else:
+        print(f"The result is a DRAW")
 
 
 if __name__ == "__main__":
