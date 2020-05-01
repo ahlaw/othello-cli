@@ -1,6 +1,6 @@
 import argparse
 import time
-from typing import Dict, Type
+from typing import Dict, List, Type
 
 import pkg_resources
 
@@ -11,7 +11,7 @@ from othello.game.game_state import GameState, InvalidMoveError
 from othello.game.player import Player
 
 
-def get_parser() -> argparse.ArgumentParser:
+def get_parser(agent_choices: List[str]) -> argparse.ArgumentParser:
     """
     Creates a new argument parser.
     """
@@ -20,10 +20,20 @@ def get_parser() -> argparse.ArgumentParser:
         "--version", "-v", action="version", version=f"%(prog)s {__version__}"
     )
     parser.add_argument(
-        "--black", "-b", help="Agent type for black", type=str, default="human"
+        "--black",
+        "-b",
+        help="Agent type for black",
+        type=str,
+        choices=agent_choices,
+        default="human",
     )
     parser.add_argument(
-        "--white", "-w", help="Agent type for white", type=str, default="human"
+        "--white",
+        "-w",
+        help="Agent type for white",
+        type=str,
+        choices=agent_choices,
+        default="human",
     )
     return parser
 
@@ -39,11 +49,11 @@ def get_agents() -> Dict[str, Type[Agent]]:
 
 
 def main() -> None:
-    parser = get_parser()
+    agents = get_agents()
+
+    parser = get_parser(list(agents.keys()))
     print(type(parser))
     args = parser.parse_args()
-
-    agents = get_agents()
 
     player = {}
     player[Player.BLACK] = agents[args.black]()
