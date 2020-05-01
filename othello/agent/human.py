@@ -1,9 +1,9 @@
 import re
 
-from .base import Agent
-from ..game.game_state import GameState
-from ..game.move import Move
-from ..game.point import Point
+from othello.agent.base import Agent
+from othello.game.game_state import GameState
+from othello.game.move import Move
+from othello.game.point import Point
 
 
 class InvalidInputError(Exception):

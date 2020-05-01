@@ -2,9 +2,9 @@ import itertools
 import string
 from typing import Dict, List, Tuple
 
-from .player import Player
-from .point import Point
-from .stone import StoneFactory
+from othello.game.player import Player
+from othello.game.point import Point
+from othello.game.stone import StoneFactory
 
 MIN_BOARD_SIZE = 4
 MAX_BOARD_SIZE = 26

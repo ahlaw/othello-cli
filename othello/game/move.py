@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from .point import Point
+from othello.game.point import Point
 
 
 class InvalidMoveError(Exception):

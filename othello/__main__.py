@@ -1,15 +1,6 @@
-from .agent.human import Human
-from .game.game_state import GameState, InvalidMoveError
-from .game.player import Player
-from .game.point import Point
-
-
-def point_from_coords(coords: str) -> Point:
-    try:
-        row, col = [int(x) for x in coords.split(",")]
-        return Point(row, col)
-    except BaseException:
-        raise Exception("Invalid coordinate")
+from othello.agent.human import Human
+from othello.game.game_state import GameState, InvalidMoveError
+from othello.game.player import Player
 
 
 def main() -> None:

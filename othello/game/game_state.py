@@ -3,10 +3,10 @@ from __future__ import annotations
 import copy
 from typing import List, Optional
 
-from .board import Board, InvalidStonePlacementError
-from .move import Move
-from .player import Player
-from .point import Point
+from othello.game.board import Board, InvalidStonePlacementError
+from othello.game.move import Move
+from othello.game.player import Player
+from othello.game.point import Point
 
 
 class InvalidMoveError(Exception):

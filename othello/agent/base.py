@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from ..game.game_state import GameState
-from ..game.move import Move
+from othello.game.game_state import GameState
+from othello.game.move import Move
 
 
 class Agent(ABC):

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .player import Player
+from othello.game.player import Player
 
 
 BLANK_STONE: str = " "
