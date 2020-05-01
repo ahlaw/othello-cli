@@ -12,8 +12,8 @@ class InvalidInputError(Exception):
     pass
 
 
-class UnavailableNotationError(Exception):
-    """Exception class for when no notation exists for Point instance."""
+class NotationError(Exception):
+    """Exception class for when game notation related errors."""
 
 
 class Human(Agent):
@@ -31,7 +31,7 @@ class Human(Agent):
     def point_to_notation(point: Point) -> str:
         """Return Point instance corresponding to notation string."""
         if not (0 <= point.row <= 26 and 0 <= point.col <= 26):
-            raise UnavailableNotationError("No notation for point")
+            raise NotationError("Notation unavailable for point")
         letter: str = chr(point.col + ord("a"))
         number: str = str(point.row + 1)
         return f"{letter}{number}"

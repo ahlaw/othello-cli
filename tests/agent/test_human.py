@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 
 from othello.agent.human import Human
-from othello.agent.human import InvalidInputError, UnavailableNotationError
+from othello.agent.human import InvalidInputError, NotationError
 from othello.game.game_state import GameState
 from othello.game.move import Move
 from othello.game.point import Point
@@ -34,7 +34,7 @@ def test_point_to_notation(human: Human) -> None:
 
 def test_raises_error_on_invalid_point_to_notation(human: Human) -> None:
     point = Point(0, 27)
-    with pytest.raises(UnavailableNotationError):
+    with pytest.raises(NotationError):
         Human.point_to_notation(point)
 
 
