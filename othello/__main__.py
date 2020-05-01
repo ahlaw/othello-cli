@@ -13,7 +13,7 @@ def point_from_coords(coords: str) -> Point:
 
 
 def main() -> None:
-    game_state = GameState.new_game(4)
+    game_state = GameState.new_game()
     agents = {}
     agents[Player.BLACK] = Human()
     agents[Player.WHITE] = Human()

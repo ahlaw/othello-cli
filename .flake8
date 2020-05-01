@@ -1,6 +1,6 @@
 [flake8]
 select = ANN,B,B9,BLK,C,E,F,I,S,W
-ignore = E203,E501,W503,S322,ANN101,ANN102
+ignore = E203,E501,W503,S311,S322,ANN101,ANN102
 max-line-length = 80
 max-complexity = 10
 application-import-names = othello,tests
