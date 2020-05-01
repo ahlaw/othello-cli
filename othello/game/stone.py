@@ -4,8 +4,8 @@ from othello.game.player import Player
 
 
 BLANK_STONE: str = " "
-BLACK_STONE: str = "●"
-WHITE_STONE: str = "○"
+BLACK_STONE: str = "○"
+WHITE_STONE: str = "●"
 
 
 class StoneError(Exception):
