@@ -3,9 +3,9 @@ from typing import Optional
 from .player import Player
 
 
-BLANK_STONE: str = "0"
-BLACK_STONE: str = "1"
-WHITE_STONE: str = "2"
+BLANK_STONE: str = " "
+BLACK_STONE: str = "●"
+WHITE_STONE: str = "○"
 
 
 class StoneError(Exception):

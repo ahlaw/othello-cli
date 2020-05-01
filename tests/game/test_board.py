@@ -90,3 +90,44 @@ def test_count_stones_black(board: Board) -> None:
 
 def test_count_stones_white(board: Board) -> None:
     assert board.count_stones(Player.WHITE) == 2
+
+
+def test_board_str_size_4() -> None:
+    board = Board(4)
+    assert (
+        str(board)
+        == """ +-------+
+1| | | | |
+ +-------+
+2| |○|●| |
+ +-------+
+3| |●|○| |
+ +-------+
+4| | | | |
+ +-------+
+  a b c d """
+    )
+
+
+def test_board_str_size_8(board: Board) -> None:
+    assert (
+        str(board)
+        == """ +---------------+
+1| | | | | | | | |
+ +---------------+
+2| | | | | | | | |
+ +---------------+
+3| | | | | | | | |
+ +---------------+
+4| | | |○|●| | | |
+ +---------------+
+5| | | |●|○| | | |
+ +---------------+
+6| | | | | | | | |
+ +---------------+
+7| | | | | | | | |
+ +---------------+
+8| | | | | | | | |
+ +---------------+
+  a b c d e f g h """
+    )

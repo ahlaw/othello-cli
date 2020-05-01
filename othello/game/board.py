@@ -1,3 +1,5 @@
+import itertools
+import string
 from typing import Dict, List, Tuple
 
 from .player import Player
@@ -46,7 +48,14 @@ class Board:
         self._grid[center + 1][center + 1] = self.stone(Player.WHITE)
 
     def __str__(self) -> str:
-        return "\n".join(f"{row}" for row in self._grid)
+        rowline = f" +{'-' * (self.size * 2 - 1)}+"
+        rowlines = [rowline] * (self.size + 1)
+
+        rows = [f"{i+1}|{'|'.join(row)}|" for i, row in enumerate(self._grid)]
+        columns = string.ascii_lowercase[: self.size]
+        rows.append(f"  {' '.join(columns)} ")
+
+        return "\n".join(itertools.chain(*zip(rowlines, rows)))
 
     def count_stones(self, player: Player) -> int:
         """
