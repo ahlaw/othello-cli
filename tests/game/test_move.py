@@ -22,3 +22,15 @@ def test_resign() -> None:
 def test_raises_exception_on_invalid_move() -> None:
     with pytest.raises(InvalidMoveError):
         Move()
+
+
+def test_equality_play() -> None:
+    assert Move.play(Point(0, 0)) == Move.play(Point(0, 0))
+
+
+def test_equality_pass() -> None:
+    assert Move.pass_turn() == Move.pass_turn()
+
+
+def test_equality_resign() -> None:
+    assert Move.resign() == Move.resign()

@@ -12,37 +12,45 @@ class InvalidInputError(Exception):
     pass
 
 
+class UnavailableNotationError(Exception):
+    """Exception class for when no notation exists for Point instance."""
+
+
 class Human(Agent):
     def select_move(self, game_state: GameState) -> Move:
         """Select move using user input."""
         while True:
             try:
                 move_input: str = input("Enter your move: ").strip().lower()
-                self._validate_input(move_input)
-                return self._notation_to_point(move_input)
+                self.validate_input(move_input)
+                return self.notation_to_move(move_input)
             except InvalidInputError:
                 print("Invalid input! Please try again.")
 
     @staticmethod
     def point_to_notation(point: Point) -> str:
+        """Return Point instance corresponding to notation string."""
+        if not (0 <= point.row <= 26 and 0 <= point.col <= 26):
+            raise UnavailableNotationError("No notation for point")
         letter: str = chr(point.col + ord("a"))
         number: str = str(point.row + 1)
         return f"{letter}{number}"
 
     @staticmethod
-    def _notation_to_point(move_input: str) -> Move:
+    def notation_to_move(move_input: str) -> Move:
+        """Return notation string corresponding to Point instance."""
         if move_input == "pass":
             return Move.pass_turn()
         elif move_input == "resign":
             return Move.resign()
         else:
-            letter, number = move_input
-            col: int = ord(letter) - ord("a")
-            row: int = int(number) - 1
+            col: int = ord(move_input[0]) - ord("a")
+            row: int = int(move_input[1:]) - 1
             return Move.play(Point(row, col))
 
     @staticmethod
-    def _validate_input(move_input: str) -> None:
+    def validate_input(move_input: str) -> None:
+        """Raise error if input is not valid move notation."""
         pattern = "^([a-z]([1-9]|1[0-9]|2[0-6])|pass|resign)$"
 
         valid = re.match(pattern, move_input)

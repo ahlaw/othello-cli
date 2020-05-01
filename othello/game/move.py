@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import Any, Optional
 
 from .point import Point
 
@@ -32,6 +32,16 @@ class Move:
         self.is_play = self.point is not None
         self.is_pass = is_pass
         self.is_resign = is_resign
+
+    def __eq__(self, other: Any) -> bool:
+        if other.__class__ is not self.__class__:
+            return NotImplemented
+        return (
+            self.point == other.point
+            and self.is_play == other.is_play
+            and self.is_pass == other.is_pass
+            and self.is_resign == other.is_resign
+        )
 
     @classmethod
     def play(cls, point: Point) -> Move:
