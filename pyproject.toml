@@ -22,6 +22,13 @@ mypy = "^0.770"
 flake8-annotations = "^2.1.0"
 pytest-mock = "^3.1.0"
 
+[tool.poetry.scripts]
+othello = "othello.__main__:main"
+
+[tool.poetry.plugins.agents]
+human = "othello.agent.human:Human"
+random = "othello.agent.random_bot:RandomBot"
+
 [tool.coverage.paths]
 source = ["*/site-packages"]
 
