@@ -1,26 +1,18 @@
 """Test cases for the disc module."""
-import pytest
-
-from othello.game.disc import DiscFactory
+from othello.game.disc import get_disc
 from othello.game.player import Player
 
 
-@pytest.fixture
-def disc_factory() -> DiscFactory:
-    """Returns a DiscFactory instance."""
-    return DiscFactory()
-
-
-def test_factory_blank_disc(disc_factory: DiscFactory) -> None:
+def test_get_blank_disc() -> None:
     """It returns a blank character with no arguments."""
-    assert disc_factory() == " "
+    assert get_disc() == " "
 
 
-def test_factory_black_disc(disc_factory: DiscFactory) -> None:
+def test_get_black_disc() -> None:
     """It returns a black circle when passed black player."""
-    assert disc_factory(Player.BLACK) == "○"
+    assert get_disc(Player.BLACK) == "○"
 
 
-def test_factory_white_disc(disc_factory: DiscFactory) -> None:
+def test_get_white_disc() -> None:
     """It returns a black circle when passed white player."""
-    assert disc_factory(Player.WHITE) == "●"
+    assert get_disc(Player.WHITE) == "●"

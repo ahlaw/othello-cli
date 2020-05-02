@@ -3,7 +3,7 @@ import itertools
 import string
 from typing import Dict, List, Tuple
 
-from othello.game.disc import DiscFactory
+from othello.game import disc
 from othello.game.player import Player
 from othello.game.point import Point
 
@@ -30,7 +30,6 @@ class Board:
 
     Attributes:
         size: Board size.
-        disc: DiscFactory instance.
     """
 
     def __init__(self, size: int) -> None:
@@ -50,14 +49,12 @@ class Board:
 
         self.size = size
 
-        self.disc = DiscFactory()
-
         center = size // 2 - 1
-        self._grid = [[self.disc()] * size for _ in range(size)]
-        self._grid[center][center] = self.disc(Player.WHITE)
-        self._grid[center][center + 1] = self.disc(Player.BLACK)
-        self._grid[center + 1][center] = self.disc(Player.BLACK)
-        self._grid[center + 1][center + 1] = self.disc(Player.WHITE)
+        self._grid = [[disc.get_disc()] * size for _ in range(size)]
+        self._grid[center][center] = disc.get_disc(Player.WHITE)
+        self._grid[center][center + 1] = disc.get_disc(Player.BLACK)
+        self._grid[center + 1][center] = disc.get_disc(Player.BLACK)
+        self._grid[center + 1][center + 1] = disc.get_disc(Player.WHITE)
 
     def __str__(self) -> str:
         """ASCII graphical representation of Board.
@@ -84,7 +81,7 @@ class Board:
             Disc count.
         """
         count = 0
-        player_disc = self.disc(player)
+        player_disc = disc.get_disc(player)
         for i in range(self.size):
             for j in range(self.size):
                 if self._grid[i][j] == player_disc:
@@ -111,10 +108,10 @@ class Board:
         if point not in valid_moves:
             raise InvalidDiscPlacementError(f"{point} is not a valid move!")
 
-        self._grid[point.row][point.col] = self.disc(player)
+        self._grid[point.row][point.col] = disc.get_disc(player)
         outflanks = valid_moves[point]
         for row, col in outflanks:
-            self._grid[row][col] = self.disc(player)
+            self._grid[row][col] = disc.get_disc(player)
 
     def get_valid_moves(self, player: Player) -> Dict[Point, List[Point]]:
         """Get valid moves and their captures.
@@ -147,7 +144,10 @@ class Board:
             (1, -1),
         ]
         outflanks = []
-        if self._is_on_grid(point) and self._grid[point.row][point.col] == self.disc():
+        if (
+            self._is_on_grid(point)
+            and self._grid[point.row][point.col] == disc.get_disc()
+        ):
             for direction in directions:
                 tmp = self._get_outflanks_in_dir(player, point, direction)
                 if tmp:
@@ -164,8 +164,8 @@ class Board:
             next_point = Point(next_point.row + row_dir, next_point.col + col_dir)
             if self._is_on_grid(next_point):
                 next_value = self._grid[next_point.row][next_point.col]
-                if next_value != self.disc():
-                    if next_value == self.disc(player):
+                if next_value != disc.get_disc():
+                    if next_value == disc.get_disc(player):
                         return outflanks
                     outflanks.append(next_point)
                 else:

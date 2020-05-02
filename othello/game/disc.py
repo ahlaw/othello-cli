@@ -15,25 +15,22 @@ class Disc(str):
     __slots__ = ()
 
 
-class DiscFactory:
-    """Creates Disc objects."""
+def get_disc(player: Optional[Player] = None) -> Disc:
+    """Returns Disc object based on given player.
 
-    def __call__(self, player: Optional[Player] = None) -> Disc:
-        """Returns Disc object based on given player.
+    Returns the Disc object corresponding to the player color
+    if a Player type is passed, or a blank Disc if no argument
+    is passed.
 
-        Returns the Disc object corresponding to the player color
-        if a Player type is passed, or a blank Disc if no argument
-        is passed.
+    Args:
+        player: Disc will be made for this player (blank disc if None).
 
-        Args:
-            player: Disc will be made for this player (blank disc if None).
-
-        Returns:
-            Corresponding Disc object.
-        """
-        if player == Player.BLACK:
-            return Disc(BLACK_DISC)
-        elif player == Player.WHITE:
-            return Disc(WHITE_DISC)
-        else:
-            return Disc(BLANK_DISC)
+    Returns:
+        Corresponding Disc object.
+    """
+    if player == Player.BLACK:
+        return Disc(BLACK_DISC)
+    elif player == Player.WHITE:
+        return Disc(WHITE_DISC)
+    else:
+        return Disc(BLANK_DISC)
