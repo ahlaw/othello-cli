@@ -24,6 +24,7 @@ pytest-mock = "^3.1.0"
 flake8-docstrings = "^1.5.0"
 darglint = "^1.2.3"
 sphinx = "^3.0.3"
+sphinx-autodoc-typehints = "^1.10.3"
 
 [tool.poetry.scripts]
 othello = "othello.__main__:main"

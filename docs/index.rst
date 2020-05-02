@@ -46,3 +46,15 @@ Usage
 .. option:: --help
 
    Display a short help message and exit.
+
+
+Reference
+---------
+
+.. toctree::
+   :maxdepth: 1
+
+   reference/game
+   reference/board
+   reference/types
+   reference/agents
