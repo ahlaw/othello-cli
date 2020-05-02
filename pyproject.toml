@@ -21,6 +21,8 @@ safety = "^1.9.0"
 mypy = "^0.770"
 flake8-annotations = "^2.1.0"
 pytest-mock = "^3.1.0"
+flake8-docstrings = "^1.5.0"
+darglint = "^1.2.3"
 
 [tool.poetry.scripts]
 othello = "othello.__main__:main"

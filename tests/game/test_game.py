@@ -1,3 +1,4 @@
+"""Test cases for the board module."""
 import pytest
 
 from othello.game.game_state import GameState, InvalidMoveError
@@ -12,7 +13,14 @@ def new_game() -> GameState:
     return GameState.new_game()
 
 
+def test_legal_moves(new_game: GameState) -> None:
+    """It returns legal moves for a new game."""
+    legal_moves = new_game.legal_moves()
+    assert sorted(legal_moves) == [Point(2, 3), Point(3, 2), Point(4, 5), Point(5, 4)]
+
+
 def test_apply_move_play(new_game: GameState) -> None:
+    """It returns correct GameState after a play Move."""
     game = new_game.apply_move(Move.play(Point(3, 2)))
     assert (
         game.current_player == Player.WHITE
@@ -23,6 +31,7 @@ def test_apply_move_play(new_game: GameState) -> None:
 
 
 def test_apply_move_resign(new_game: GameState) -> None:
+    """It returns correct GameState after a resign Move."""
     game = new_game.apply_move(Move.resign())
     assert (
         game.current_player == Player.WHITE
@@ -32,36 +41,38 @@ def test_apply_move_resign(new_game: GameState) -> None:
     )
 
 
-def test_legal_moves(new_game: GameState) -> None:
-    legal_moves = new_game.legal_moves()
-    assert sorted(legal_moves) == [Point(2, 3), Point(3, 2), Point(4, 5), Point(5, 4)]
-
-
-def test_raises_exception_on_illegal_stone_placement(new_game: GameState) -> None:
+def test_illegal_play(new_game: GameState) -> None:
+    """It raises `InvalidMoveError` on illegal play."""
     with pytest.raises(InvalidMoveError):
         new_game.apply_move(Move.play(Point(0, 0)))
 
 
-def test_raises_exception_on_illegal_pass(new_game: GameState) -> None:
+def test_illegal_pass(new_game: GameState) -> None:
+    """It raises `InvalidMoveError` on illegal pass."""
     with pytest.raises(InvalidMoveError):
         new_game.apply_move(Move.pass_turn())
 
 
-def test_game_not_over_at_start(new_game: GameState) -> None:
+def test_game_not_over(new_game: GameState) -> None:
+    """It declares game is not over at start of game."""
     assert not new_game.is_over()
 
 
 def test_game_not_over_after_move(new_game: GameState) -> None:
+    """It declares game is not over after first move."""
+    assert not new_game.is_over()
     game = new_game.apply_move(Move.play(Point(3, 2)))
     assert not game.is_over()
 
 
 def test_game_over_after_resign(new_game: GameState) -> None:
+    """It declares game is over after player resigns."""
     game = new_game.apply_move(Move.resign())
     assert game.is_over()
 
 
 def test_game_over_after_two_passes() -> None:
+    """It declares game is over after both players pass."""
     game = GameState.new_game(board_size=4)
     moves = [
         Point(1, 0),
@@ -85,16 +96,19 @@ def test_game_over_after_two_passes() -> None:
 
 
 def test_white_wins_when_black_resigns(new_game: GameState) -> None:
+    """It declares white wins when black resigns."""
     game = new_game.apply_move(Move.resign())
     assert game.winner() == Player.WHITE
 
 
 def test_black_wins_with_more_stones(new_game: GameState) -> None:
+    """It declares black wins when it has more stones."""
     game = new_game.apply_move(Move.play(Point(3, 2)))
     assert game.winner() == Player.BLACK
 
 
 def test_white_wins_with_more_stones(new_game: GameState) -> None:
+    """It declares white wins when it has more stones."""
     game = new_game.apply_move(Move.play(Point(3, 2)))
     game = game.apply_move(Move.play(Point(2, 2)))
     game = game.apply_move(Move.play(Point(2, 3)))
@@ -103,4 +117,5 @@ def test_white_wins_with_more_stones(new_game: GameState) -> None:
 
 
 def test_game_draw(new_game: GameState) -> None:
+    """It declares draw when same amount of white and black stones."""
     assert new_game.winner() is None

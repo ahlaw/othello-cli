@@ -1,3 +1,4 @@
+"""Test cases for the random_bot module."""
 from unittest.mock import Mock
 
 import pytest
@@ -14,7 +15,8 @@ def random_bot() -> RandomBot:
     return RandomBot()
 
 
-def test_select_plays_random_valid_move(mocker: Mock, random_bot: RandomBot) -> None:
+def test_plays_random_move(mocker: Mock, random_bot: RandomBot) -> None:
+    """It returns a random Move from legal moves."""
     mocker.patch("random.choice", lambda n: n[0])
     mocker.patch.object(
         GameState, "legal_moves", return_value=[Point(0, 0), Point(1, 1)]
@@ -24,7 +26,8 @@ def test_select_plays_random_valid_move(mocker: Mock, random_bot: RandomBot) -> 
     assert selected == Move.play(Point(0, 0))
 
 
-def test_select_pass_when_no_plays(mocker: Mock, random_bot: RandomBot) -> None:
+def test_pass_when_no_plays(mocker: Mock, random_bot: RandomBot) -> None:
+    """It returns a pass Move when there are no legal moves."""
     mocker.patch.object(GameState, "legal_moves", return_value=[])
     game_state = GameState.new_game()
     selected = random_bot.select_move(game_state)

@@ -1,3 +1,4 @@
+"""Human agent module."""
 import re
 
 from othello.agent.base import Agent
@@ -17,8 +18,17 @@ class NotationError(Exception):
 
 
 class Human(Agent):
+    """Human agent."""
+
     def select_move(self, game_state: GameState) -> Move:
-        """Select move using user input."""
+        """Select move using user input.
+
+        Args:
+            game_state: Current game state.
+
+        Returns:
+            Move instance.
+        """
         while True:
             try:
                 move_input: str = input("Enter your move: ").strip().lower()
@@ -29,7 +39,17 @@ class Human(Agent):
 
     @staticmethod
     def point_to_notation(point: Point) -> str:
-        """Return Point instance corresponding to notation string."""
+        """Convert Point instance to notation string.
+
+        Args:
+            point: Point to be converted.
+
+        Returns:
+            Notation.
+
+        Raises:
+            NotationError: No notation exists for given point.
+        """
         if not (0 <= point.row <= 26 and 0 <= point.col <= 26):
             raise NotationError("Notation unavailable for point")
         letter: str = chr(point.col + ord("a"))
@@ -38,7 +58,14 @@ class Human(Agent):
 
     @staticmethod
     def notation_to_move(move_input: str) -> Move:
-        """Return notation string corresponding to Point instance."""
+        """Convert notation string to Point instance.
+
+        Args:
+            move_input: Notation to be converted.
+
+        Returns:
+            Move.
+        """
         if move_input == "pass":
             return Move.pass_turn()
         elif move_input == "resign":
@@ -50,7 +77,14 @@ class Human(Agent):
 
     @staticmethod
     def validate_input(move_input: str) -> None:
-        """Raise error if input is not valid move notation."""
+        """Validate human input.
+
+        Args:
+            move_input: Notation input.
+
+        Raises:
+            InvalidInputError: Input is not valid move notation.
+        """
         pattern = "^([a-z]([1-9]|1[0-9]|2[0-6])|pass|resign)$"
 
         valid = re.match(pattern, move_input)

@@ -1,3 +1,4 @@
+"""Command-line interface."""
 import argparse
 import time
 from typing import Dict, List, Type
@@ -12,8 +13,17 @@ from othello.game.player import Player
 
 
 def get_parser(agent_choices: List[str]) -> argparse.ArgumentParser:
-    """
-    Creates a new argument parser.
+    """Creates a new argument parser.
+
+    Parser has two command-line flags, one for each color. For each color,
+    an agent corresponding to an entrypoint name can be supplied. By default,
+    human is passed for both colors.
+
+    Args:
+        agent_choices: List of possible agent choices.
+
+    Returns:
+        ArgumentParser object.
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -39,8 +49,10 @@ def get_parser(agent_choices: List[str]) -> argparse.ArgumentParser:
 
 
 def get_agents() -> Dict[str, Type[Agent]]:
-    """
-    Returns dict of agents entrypoints mapped to name.
+    """Returns dict of agents.
+
+    Returns:
+        Dictionary mapping agent entrypoints name to Agent instances.
     """
     agents = {}
     for entry_point in pkg_resources.iter_entry_points("agents"):
@@ -49,6 +61,7 @@ def get_agents() -> Dict[str, Type[Agent]]:
 
 
 def main() -> None:
+    """Script entrypoint."""
     agents = get_agents()
 
     parser = get_parser(list(agents.keys()))

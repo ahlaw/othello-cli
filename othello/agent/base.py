@@ -1,3 +1,4 @@
+"""Abstract base class for agents."""
 from abc import ABC, abstractmethod
 
 from othello.game.game_state import GameState

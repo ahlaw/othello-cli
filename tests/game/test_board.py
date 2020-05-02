@@ -1,3 +1,4 @@
+"""Test cases for the board module."""
 import pytest
 
 from othello.game.board import Board
@@ -12,31 +13,26 @@ def board() -> Board:
     return Board(8)
 
 
-def test_raises_exception_below_min_board_size() -> None:
+def test_board_size_below_min() -> None:
+    """It raises `BoardSizeError` when size is below minimum."""
     with pytest.raises(BoardSizeError):
         Board(2)
 
 
-def test_raises_exception_above_max_board_size() -> None:
+def test_board_size_above_max() -> None:
+    """It raises `BoardSizeError` when size is above maximum."""
     with pytest.raises(BoardSizeError):
         Board(28)
 
 
-def test_raises_exception_on_odd_board_size() -> None:
+def test_odd_board_size() -> None:
+    """It raises `BoardSizeError` when size is odd."""
     with pytest.raises(BoardSizeError):
         Board(9)
 
 
-def test_correct_starting_position(board: Board) -> None:
-    assert (
-        board._grid[3][3] == board.stone(Player.WHITE)
-        and board._grid[3][4] == board.stone(Player.BLACK)
-        and board._grid[4][3] == board.stone(Player.BLACK)
-        and board._grid[4][4] == board.stone(Player.WHITE)
-    )
-
-
-def test_get_initial_valid_moves_black(board: Board) -> None:
+def test_initial_valid_moves_black(board: Board) -> None:
+    """It returns black valid moves in the initial game state."""
     valid_moves = board.get_valid_moves(Player.BLACK)
     assert valid_moves == {
         Point(3, 2): [Point(3, 3)],
@@ -46,7 +42,8 @@ def test_get_initial_valid_moves_black(board: Board) -> None:
     }
 
 
-def test_get_initial_valid_moves_white(board: Board) -> None:
+def test_initial_valid_moves_white(board: Board) -> None:
+    """It returns white valid moves in the initial game state."""
     valid_moves = board.get_valid_moves(Player.WHITE)
     assert valid_moves == {
         Point(4, 2): [Point(4, 3)],
@@ -56,43 +53,35 @@ def test_get_initial_valid_moves_white(board: Board) -> None:
     }
 
 
-def test_get_valid_moves_custom() -> None:
-    board = Board(4)
-    board._grid[0][1] = board.stone(Player.WHITE)
-    valid_moves = board.get_valid_moves(Player.BLACK)
-    print(valid_moves)
+def test_valid_stone_placement(board: Board) -> None:
+    """It returns white valid moves after black's first move."""
+    board.place_stone(Player.BLACK, Point(2, 3))
+    valid_moves = board.get_valid_moves(Player.WHITE)
     assert valid_moves == {
-        Point(1, 0): [Point(1, 1)],
-        Point(2, 3): [Point(2, 2)],
-        Point(3, 2): [Point(2, 2)],
+        Point(2, 2): [Point(3, 3)],
+        Point(2, 4): [Point(3, 4)],
+        Point(4, 2): [Point(4, 3)],
     }
 
 
-def test_place_stone_valid(board: Board) -> None:
-    board.place_stone(Player.BLACK, Point(2, 3))
-    assert (
-        board._grid[3][4] == board.stone(Player.BLACK)
-        and board._grid[2][3] == board.stone(Player.BLACK)
-        and board._grid[3][3] == board.stone(Player.BLACK)
-        and board._grid[4][3] == board.stone(Player.BLACK)
-        and board._grid[4][4] == board.stone(Player.WHITE)
-    )
-
-
-def test_raises_exception_on_invalid_move(board: Board) -> None:
+def test_invalid_stone_placement(board: Board) -> None:
+    """It raises `InvalidStonePlacementError` on invalid move for place_stone."""
     with pytest.raises(InvalidStonePlacementError):
         board.place_stone(Player.BLACK, Point(0, 0))
 
 
 def test_count_stones_black(board: Board) -> None:
+    """It counts the number of black stones on board."""
     assert board.count_stones(Player.BLACK) == 2
 
 
 def test_count_stones_white(board: Board) -> None:
+    """It counts the number of white stones on board."""
     assert board.count_stones(Player.WHITE) == 2
 
 
 def test_board_str_size_4() -> None:
+    """It returns the str representation for size 4 Board."""
     board = Board(4)
     assert (
         str(board)
@@ -110,6 +99,7 @@ def test_board_str_size_4() -> None:
 
 
 def test_board_str_size_8(board: Board) -> None:
+    """It returns the str representation for size 8 Board."""
     assert (
         str(board)
         == """ +---------------+

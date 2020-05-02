@@ -1,3 +1,4 @@
+"""Board module."""
 import itertools
 import string
 from typing import Dict, List, Tuple
@@ -11,28 +12,39 @@ MAX_BOARD_SIZE = 26
 
 
 class BoardSizeError(Exception):
-    """
-    Exception class for invalid board sizes when initializing Board object.
-    """
+    """Raised when initializing Board object with invalid board size."""
 
     pass
 
 
 class InvalidStonePlacementError(Exception):
-    """
-    Exception class for placing stone on Board at an invalid location.
-    """
+    """Raised when placing stone on Board at an invalid location."""
 
     pass
 
 
 class Board:
-    """
-    Board class representing an Othello board with white
-    and black stones.
+    """Othello board.
+
+    Board instances keep track of what color discs are on what locations.
+
+    Attributes:
+        size: Board size.
+        stone: StoneFactory instance.
     """
 
     def __init__(self, size: int) -> None:
+        """Default constructor for Board.
+
+        Checks if board size is valid and sets up initial disc
+        positions.
+
+        Args:
+            size: Board size.
+
+        Raises:
+            BoardSizeError: Invalid board size.
+        """
         if not MIN_BOARD_SIZE <= size or not MAX_BOARD_SIZE >= size or size % 2 != 0:
             raise BoardSizeError(f"{size} is invalid size!")
 
@@ -48,6 +60,11 @@ class Board:
         self._grid[center + 1][center + 1] = self.stone(Player.WHITE)
 
     def __str__(self) -> str:
+        """ASCII graphical representation of Board.
+
+        Returns:
+            String representation.
+        """
         rowline = f" +{'-' * (self.size * 2 - 1)}+"
         rowlines = [rowline] * (self.size + 1)
 
@@ -58,9 +75,13 @@ class Board:
         return "\n".join(itertools.chain(*zip(rowlines, rows)))
 
     def count_stones(self, player: Player) -> int:
-        """
-        Counts the number of stones on the board corresponding
-        to the given player
+        """Count discs on board corresponding to the given player.
+
+        Args:
+            player: Player whose discs are counted.
+
+        Returns:
+            Disc count.
         """
         count = 0
         player_stone = self.stone(player)
@@ -71,9 +92,19 @@ class Board:
         return count
 
     def place_stone(self, player: Player, point: Point) -> None:
-        """
-        Place stone corresponding to player color at the
-        given point if it is a valid move.
+        """Place disc corresponding to player at the given point.
+
+        If the move is valid, the Board instance will be updated to
+        reflect the disc being at that point and all captured discs
+        being reversed.
+
+        Args:
+            player: The disc placed corresponds to this player.
+            point: The disc will be placed at this point.
+
+        Raises:
+            InvalidStonePlacementError: If stone cannot legally be placed
+                at the given point.
         """
         valid_moves = self.get_valid_moves(player)
 
@@ -86,10 +117,14 @@ class Board:
             self._grid[row][col] = self.stone(player)
 
     def get_valid_moves(self, player: Player) -> Dict[Point, List[Point]]:
-        """
-        Returns a dictionary of where the keys are valid stone
-        placements for the given player and the values are the
-        stones that will be captured upon playing the move.
+        """Get valid moves and their captures.
+
+        Args:
+            player: Player whose moves are considered.
+
+        Returns:
+            Dictionary mapping valid stone placements to discs captured by the
+            move.
         """
         valid_moves = {}
         for row in range(self.size):
