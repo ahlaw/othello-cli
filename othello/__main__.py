@@ -65,7 +65,6 @@ def main() -> None:
     agents = get_agents()
 
     parser = get_parser(list(agents.keys()))
-    print(type(parser))
     args = parser.parse_args()
 
     player = {}
