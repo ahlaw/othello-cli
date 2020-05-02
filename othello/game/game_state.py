@@ -4,14 +4,14 @@ from __future__ import annotations
 import copy
 from typing import List, Optional
 
-from othello.game.board import Board, InvalidStonePlacementError
+from othello.game.board import Board, InvalidDiscPlacementError
 from othello.game.move import Move
 from othello.game.player import Player
 from othello.game.point import Point
 
 
 class InvalidMoveError(Exception):
-    """Raised when passing while there are legal stone placements."""
+    """Raised when passing while there are legal disc placements."""
 
     pass
 
@@ -61,9 +61,9 @@ class GameState:
         if move.is_play and move.point is not None:
             next_board = copy.deepcopy(self.board)
             try:
-                next_board.place_stone(self.current_player, move.point)
-            except InvalidStonePlacementError:
-                raise InvalidMoveError(f"Cannot place the stone at {move.point}")
+                next_board.place_disc(self.current_player, move.point)
+            except InvalidDiscPlacementError:
+                raise InvalidMoveError(f"Cannot place the disc at {move.point}")
         else:
             if move.is_pass and self.legal_moves():
                 raise InvalidMoveError("Cannot pass when there are legal moves!")
@@ -105,8 +105,8 @@ class GameState:
         """
         if self.last_move and self.last_move.is_resign:
             return self.current_player
-        black_count = self.board.count_stones(Player.BLACK)
-        white_count = self.board.count_stones(Player.WHITE)
+        black_count = self.board.count_discs(Player.BLACK)
+        white_count = self.board.count_discs(Player.WHITE)
         if black_count > white_count:
             return Player.BLACK
         elif white_count > black_count:

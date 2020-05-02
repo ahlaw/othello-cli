@@ -2,7 +2,7 @@
 import pytest
 
 from othello.game.board import Board
-from othello.game.board import BoardSizeError, InvalidStonePlacementError
+from othello.game.board import BoardSizeError, InvalidDiscPlacementError
 from othello.game.player import Player
 from othello.game.point import Point
 
@@ -53,9 +53,9 @@ def test_initial_valid_moves_white(board: Board) -> None:
     }
 
 
-def test_valid_stone_placement(board: Board) -> None:
+def test_valid_disc_placement(board: Board) -> None:
     """It returns white valid moves after black's first move."""
-    board.place_stone(Player.BLACK, Point(2, 3))
+    board.place_disc(Player.BLACK, Point(2, 3))
     valid_moves = board.get_valid_moves(Player.WHITE)
     assert valid_moves == {
         Point(2, 2): [Point(3, 3)],
@@ -64,20 +64,20 @@ def test_valid_stone_placement(board: Board) -> None:
     }
 
 
-def test_invalid_stone_placement(board: Board) -> None:
-    """It raises `InvalidStonePlacementError` on invalid move for place_stone."""
-    with pytest.raises(InvalidStonePlacementError):
-        board.place_stone(Player.BLACK, Point(0, 0))
+def test_invalid_disc_placement(board: Board) -> None:
+    """It raises `InvalidDiscPlacementError` on invalid move for place_disc."""
+    with pytest.raises(InvalidDiscPlacementError):
+        board.place_disc(Player.BLACK, Point(0, 0))
 
 
-def test_count_stones_black(board: Board) -> None:
-    """It counts the number of black stones on board."""
-    assert board.count_stones(Player.BLACK) == 2
+def test_count_discs_black(board: Board) -> None:
+    """It counts the number of black discs on board."""
+    assert board.count_discs(Player.BLACK) == 2
 
 
-def test_count_stones_white(board: Board) -> None:
-    """It counts the number of white stones on board."""
-    assert board.count_stones(Player.WHITE) == 2
+def test_count_discs_white(board: Board) -> None:
+    """It counts the number of white discs on board."""
+    assert board.count_discs(Player.WHITE) == 2
 
 
 def test_board_str_size_4() -> None:

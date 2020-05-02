@@ -101,14 +101,14 @@ def test_white_wins_when_black_resigns(new_game: GameState) -> None:
     assert game.winner() == Player.WHITE
 
 
-def test_black_wins_with_more_stones(new_game: GameState) -> None:
-    """It declares black wins when it has more stones."""
+def test_black_wins_with_more_discs(new_game: GameState) -> None:
+    """It declares black wins when it has more discs."""
     game = new_game.apply_move(Move.play(Point(3, 2)))
     assert game.winner() == Player.BLACK
 
 
-def test_white_wins_with_more_stones(new_game: GameState) -> None:
-    """It declares white wins when it has more stones."""
+def test_white_wins_with_more_discs(new_game: GameState) -> None:
+    """It declares white wins when it has more discs."""
     game = new_game.apply_move(Move.play(Point(3, 2)))
     game = game.apply_move(Move.play(Point(2, 2)))
     game = game.apply_move(Move.play(Point(2, 3)))
@@ -117,5 +117,5 @@ def test_white_wins_with_more_stones(new_game: GameState) -> None:
 
 
 def test_game_draw(new_game: GameState) -> None:
-    """It declares draw when same amount of white and black stones."""
+    """It declares draw when same amount of white and black discs."""
     assert new_game.winner() is None

@@ -3,9 +3,9 @@ import itertools
 import string
 from typing import Dict, List, Tuple
 
+from othello.game.disc import DiscFactory
 from othello.game.player import Player
 from othello.game.point import Point
-from othello.game.stone import StoneFactory
 
 MIN_BOARD_SIZE = 4
 MAX_BOARD_SIZE = 26
@@ -17,8 +17,8 @@ class BoardSizeError(Exception):
     pass
 
 
-class InvalidStonePlacementError(Exception):
-    """Raised when placing stone on Board at an invalid location."""
+class InvalidDiscPlacementError(Exception):
+    """Raised when placing disc on Board at an invalid location."""
 
     pass
 
@@ -30,7 +30,7 @@ class Board:
 
     Attributes:
         size: Board size.
-        stone: StoneFactory instance.
+        disc: DiscFactory instance.
     """
 
     def __init__(self, size: int) -> None:
@@ -50,14 +50,14 @@ class Board:
 
         self.size = size
 
-        self.stone = StoneFactory()
+        self.disc = DiscFactory()
 
         center = size // 2 - 1
-        self._grid = [[self.stone()] * size for _ in range(size)]
-        self._grid[center][center] = self.stone(Player.WHITE)
-        self._grid[center][center + 1] = self.stone(Player.BLACK)
-        self._grid[center + 1][center] = self.stone(Player.BLACK)
-        self._grid[center + 1][center + 1] = self.stone(Player.WHITE)
+        self._grid = [[self.disc()] * size for _ in range(size)]
+        self._grid[center][center] = self.disc(Player.WHITE)
+        self._grid[center][center + 1] = self.disc(Player.BLACK)
+        self._grid[center + 1][center] = self.disc(Player.BLACK)
+        self._grid[center + 1][center + 1] = self.disc(Player.WHITE)
 
     def __str__(self) -> str:
         """ASCII graphical representation of Board.
@@ -74,7 +74,7 @@ class Board:
 
         return "\n".join(itertools.chain(*zip(rowlines, rows)))
 
-    def count_stones(self, player: Player) -> int:
+    def count_discs(self, player: Player) -> int:
         """Count discs on board corresponding to the given player.
 
         Args:
@@ -84,18 +84,18 @@ class Board:
             Disc count.
         """
         count = 0
-        player_stone = self.stone(player)
+        player_disc = self.disc(player)
         for i in range(self.size):
             for j in range(self.size):
-                if self._grid[i][j] == player_stone:
+                if self._grid[i][j] == player_disc:
                     count += 1
         return count
 
-    def place_stone(self, player: Player, point: Point) -> None:
+    def place_disc(self, player: Player, point: Point) -> None:
         """Place disc corresponding to player at the given point.
 
         If the move is valid, the Board instance will be updated to
-        reflect the disc being at that point and all captured discs
+        reflect the disc being at that point and all outflanked discs
         being reversed.
 
         Args:
@@ -103,18 +103,18 @@ class Board:
             point: The disc will be placed at this point.
 
         Raises:
-            InvalidStonePlacementError: If stone cannot legally be placed
+            InvalidDiscPlacementError: If disc cannot legally be placed
                 at the given point.
         """
         valid_moves = self.get_valid_moves(player)
 
         if point not in valid_moves:
-            raise InvalidStonePlacementError(f"{point} is not a valid move!")
+            raise InvalidDiscPlacementError(f"{point} is not a valid move!")
 
-        self._grid[point.row][point.col] = self.stone(player)
-        capturables = valid_moves[point]
-        for row, col in capturables:
-            self._grid[row][col] = self.stone(player)
+        self._grid[point.row][point.col] = self.disc(player)
+        outflanks = valid_moves[point]
+        for row, col in outflanks:
+            self._grid[row][col] = self.disc(player)
 
     def get_valid_moves(self, player: Player) -> Dict[Point, List[Point]]:
         """Get valid moves and their captures.
@@ -123,19 +123,19 @@ class Board:
             player: Player whose moves are considered.
 
         Returns:
-            Dictionary mapping valid stone placements to discs captured by the
+            Dictionary mapping valid disc placements to discs captured by the
             move.
         """
         valid_moves = {}
         for row in range(self.size):
             for col in range(self.size):
                 point = Point(row, col)
-                capturables = self._get_capturables(player, point)
-                if capturables:
-                    valid_moves[point] = capturables
+                outflanks = self._get_outflanks(player, point)
+                if outflanks:
+                    valid_moves[point] = outflanks
         return valid_moves
 
-    def _get_capturables(self, player: Player, point: Point) -> List[Point]:
+    def _get_outflanks(self, player: Player, point: Point) -> List[Point]:
         directions = [
             (-1, 1),
             (0, 1),
@@ -146,28 +146,28 @@ class Board:
             (0, -1),
             (1, -1),
         ]
-        capturables = []
-        if self._is_on_grid(point) and self._grid[point.row][point.col] == self.stone():
+        outflanks = []
+        if self._is_on_grid(point) and self._grid[point.row][point.col] == self.disc():
             for direction in directions:
-                tmp = self._get_capturables_in_dir(player, point, direction)
+                tmp = self._get_outflanks_in_dir(player, point, direction)
                 if tmp:
-                    capturables.extend(tmp)
-        return capturables
+                    outflanks.extend(tmp)
+        return outflanks
 
-    def _get_capturables_in_dir(
+    def _get_outflanks_in_dir(
         self, player: Player, point: Point, direction: Tuple[int, int]
     ) -> List[Point]:
-        capturables: List[Point] = []
+        outflanks: List[Point] = []
         next_point = point
         row_dir, col_dir = direction
         while True:
             next_point = Point(next_point.row + row_dir, next_point.col + col_dir)
             if self._is_on_grid(next_point):
                 next_value = self._grid[next_point.row][next_point.col]
-                if next_value != self.stone():
-                    if next_value == self.stone(player):
-                        return capturables
-                    capturables.append(next_point)
+                if next_value != self.disc():
+                    if next_value == self.disc(player):
+                        return outflanks
+                    outflanks.append(next_point)
                 else:
                     break
             else:
