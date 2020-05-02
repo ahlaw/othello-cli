@@ -2,7 +2,7 @@
 try:
     from importlib.metadata import version, PackageNotFoundError  # type: ignore
 except ImportError:  # pragma: no cover
-    from importlib.metadata import version, PackageNotFoundError  # type: ignore
+    from importlib_metadata import version, PackageNotFoundError  # type: ignore
 
 
 try:
