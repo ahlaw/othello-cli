@@ -7,7 +7,7 @@ from nox.sessions import Session
 
 
 nox.options.sessions = "lint", "safety", "mypy", "tests"
-locations = "othello", "tests", "noxfile.py"
+locations = "othello", "tests", "noxfile.py", "docs/conf.py"
 
 
 def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> None:
@@ -86,3 +86,10 @@ def mypy(session: Session) -> None:
     args = session.posargs or locations
     install_with_constraints(session, "mypy")
     session.run("mypy", *args)
+
+
+@nox.session(python="3.8")
+def docs(session: Session) -> None:
+    """Build the documentation."""
+    install_with_constraints(session, "sphinx")
+    session.run("sphinx-build", "docs", "docs/_build")
