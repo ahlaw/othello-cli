@@ -26,3 +26,8 @@ $ othello [OPTIONS]
     -v, --version
     -h, --help
 ```
+
+
+## License
+
+[MIT License](LICENSE.md)
