@@ -1,4 +1,4 @@
-Othello Documentation
+Othello-CLI Documentation
 =====================
 
 .. toctree::
@@ -55,6 +55,5 @@ Reference
    :maxdepth: 1
 
    reference/game
-   reference/board
    reference/types
    reference/agents

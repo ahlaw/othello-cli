@@ -8,9 +8,9 @@ description = "CLI Othello with bots"
 authors = ["Amos Law <amos.law98@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/ahlaw/othello"
-repository = "https://github.com/ahlaw/othello"
-keywords = ["othello"]
+homepage = "https://github.com/ahlaw/othello-cli"
+repository = "https://github.com/ahlaw/othello-cli"
+keywords = ["othello", "cli"]
 
 [tool.poetry.dependencies]
 python = "^3.7"

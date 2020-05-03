@@ -2,7 +2,7 @@
 from datetime import datetime
 
 
-project = "Othello"
+project = "Othello-CLI"
 author = "Amos Law"
 copyright = f"{datetime.now().year}, {author}"
 extensions = [
@@ -11,5 +11,3 @@ extensions = [
     "sphinx_autodoc_typehints",
 ]
 exclude_patterns = ["_build"]
-html_theme = "alabaster"
-html_static_path = ["_static"]
