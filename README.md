@@ -12,7 +12,7 @@ A list of available agents is available via the help command.
 To install the Othello project, run this command in your terminal:
 
 ```
-$ pip install othello
+$ pip install othello-cli
 ```
 
 

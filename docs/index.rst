@@ -21,7 +21,7 @@ run this command in your terminal:
 
 .. code-block:: console
 
-   $ pip install othello
+   $ pip install othello-cli
 
 
 Usage

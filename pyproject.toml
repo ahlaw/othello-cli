@@ -1,5 +1,8 @@
 [tool.poetry]
-name = "othello"
+name = "othello-cli"
+packages = [
+    { include = "othello" }
+]
 version = "0.1.0"
 description = "CLI Othello with bots"
 authors = ["Amos Law <amos.law98@gmail.com>"]
