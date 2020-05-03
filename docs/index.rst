@@ -16,6 +16,7 @@ via the help command.
 Installation
 ------------
 
+Othello-CLI requires Python 3.7+.
 To install the Othello project,
 run this command in your terminal:
 

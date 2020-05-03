@@ -3,7 +3,7 @@
 [![Read the Docs](https://readthedocs.org/projects/othello-cli/badge/)](https://othello-cli.readthedocs.io/)
 
 
-# othello
+# Othello-CLI
 
 A command-line interface for Othello! Either player can be human or a bot.
 A list of available agents is available via the help command.
@@ -11,7 +11,7 @@ A list of available agents is available via the help command.
 
 ## Installation
 
-To install the Othello project, run this command in your terminal:
+Othello-CLI suports Python 3.7+. To install the Othello project, run this command in your terminal:
 
 ```
 $ pip install othello-cli
