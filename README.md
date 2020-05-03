@@ -1,4 +1,6 @@
-[![Tests](https://github.com/ahlaw/othello/workflows/Tests/badge.svg)](https://github.com/cjolowicz/hypermodern-python/actions?workflow=Tests)
+[![Tests](https://github.com/ahlaw/othello-cli/workflows/Tests/badge.svg)](https://github.com/ahlaw/othello-cli/actions?workflow=Tests)
+[![PyPI](https://img.shields.io/pypi/v/othello-cli.svg)](https://pypi.org/project/othello-cli/)
+[![Read the Docs](https://readthedocs.org/projects/othello-cli/badge/)](https://othello-cli.readthedocs.io/)
 
 
 # othello

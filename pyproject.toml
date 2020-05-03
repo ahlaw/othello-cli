@@ -10,6 +10,7 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/ahlaw/othello-cli"
 repository = "https://github.com/ahlaw/othello-cli"
+documentation = "https://othello-cli.readthedocs.io"
 keywords = ["othello", "cli"]
 
 [tool.poetry.dependencies]
